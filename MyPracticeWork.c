@@ -19,6 +19,30 @@ void reverse(char* string, int size){
 		//(*string) = 
 	}
 }
+// Question 3
+// number of occurrences of a given letter in a given string
+int count(char* string, char letter){
+	
+}
+
+// Question 4
+// print contents of an array of ints with tabs between elements
+void printArray(int array[], int size){
+	
+}
+
+//Question 5
+// Sum the contents of an int array
+int addAll(int* array, int size){
+	
+}
+
+//Question 6
+//Create an array of ints in which the negative numbers come before the positive ones
+// (Note: You can't return an array in C. The output array must be an argument.)
+void negFirst(int array[], int size, int output[]){
+	
+}
 
 
 int main(void) {
@@ -34,6 +58,26 @@ int main(void) {
 	char string[5] = "abcde";
 	reverse(string,5);
 	printf(string);
+	
+	// Question 3 test code
+	char* trial1 = "help me please";
+	printf("%d",count(trial1,'e'));
+	// Should print 4.
+	
+	//Question 4 test code
+	int array[5] = {1,2,-3,4,-5};
+	printArray(array,5);
+	
+	//Question 5 test code
+	int array[5] = {1,2,-3,4,-5};
+	printf("%d",addAll(array,5));
+	
+	
+	//Question 6 test code
+	int array[5] = {1,2,-3,4,-5};
+	int* array2= malloc(sizeof(int)*5);
+	negFirst(array,5,array2);
+	printArray(array2,5);
 	
 	return 0;
 }
