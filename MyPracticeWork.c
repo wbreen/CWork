@@ -25,30 +25,56 @@ void reverse(char* string, int size){
 }
 // Question 3
 // number of occurrences of a given letter in a given string
-// int count(char* string, char letter){
-	
-// 	return 0;
-// }
+int count(char* string, char letter){
+	int numLetter = 0;
 
-// // Question 4
-// // print contents of an array of ints with tabs between elements
-// void printArray(int array[], int size){
-	
-// }
+	while(*string){
+		if(*string == letter){
+			numLetter++;
+			*string++;
+		} else{
+			*string++;
+		}
+	}
+	return numLetter;
+}
 
-// //Question 5
-// // Sum the contents of an int array
-// int addAll(int* array, int size){
-	
-// 	return 0;
-// }
+// Question 4
+// print contents of an array of ints with tabs between elements
+void printArray(int array[], int size){
+	for(int i = 0; i < size; i++){
+		printf("%d\t", array[i]);
+	}
+}
 
-// //Question 6
-// //Create an array of ints in which the negative numbers come before the positive ones
-// // (Note: You can't return an array in C. The output array must be an argument.)
-// void negFirst(int array[], int size, int output[]){
-	
-// }
+//Question 5
+// Sum the contents of an int array
+int addAll(int* array, int size){
+	int sum = 0;
+	for(int i = 0; i < size; i++){
+		sum = sum + (*(array+i));
+	}
+	return sum;
+}
+
+//Question 6
+//Create an array of ints in which the negative numbers come before the positive ones
+// (Note: You can't return an array in C. The output array must be an argument.)
+void negFirst(int array[], int size, int output[]){
+	//int place = 0;
+	int start = 0;
+	int end = size-1;
+	for(int i = 0; i < size; i++){
+		if(array[i] < 0){
+			output[start] = array[i];
+			start++;
+		} 
+		if(array[i]>=0){
+			output[end] = array[i];
+			end--;
+		}
+	}
+}
 
 
 int main(void) {
