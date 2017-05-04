@@ -1,0 +1,202 @@
+#include <stdio.h>
+
+// Q1
+//reverse string1 into string2
+void reverse2(char* string1, char* string2){
+	int length = 0;
+	while(*string1){
+		string1++;
+		length++;
+	}
+	string1--;
+	while(*string1){
+		*string2 = *string1;
+		string2++;
+		string1--;
+	}
+}
+
+// Q2
+//compute the index of the first vowel in a word, or -1 if there is no vowel
+//'y' is not a vowel and assume only lower case
+int firstVowel(char* string){
+	int index = 0;
+	while(*string){
+		if(*string == 'a'||*string =='e'||*string =='i'||*string =='o'||*string =='u'){
+			return index;
+		}
+		index++;
+		string++;
+	}
+	return -1;
+}
+
+//strLen as created in class:
+int strLen(char* str){
+	int counter=0;
+	while(*str != '\0'){
+		counter++;
+		str++;
+	}
+	return counter;
+}
+
+// Q3
+//Concat two strings, return a new string(char)
+//have to use strLen as created in class
+char* concat(char* first, char* second){
+	//allocate memory for the char* to return
+	char* final;
+	char* answer;
+	int lenFirst = strLen(first);
+	int lenSecond = strLen(second);
+	int lenBoth = lenFirst + lenSecond + 1;
+	final = malloc(sizeof(char)*lenBoth);
+	answer = final;
+	while(*first){
+		*final = *first;
+		// printf("value of first in first loop: %c\n", *first);
+		// printf("value of final in first loop: %c\n", *final);
+		final++;
+		first++;
+	}
+	//returning first here gives nothing, how to go back to beginning of pointer?
+	//return *first;
+	while(*second){
+		*final = *second;
+		final++;
+		second++;
+	}
+	return answer;
+}
+
+// Q4
+//Compute a substring given a string and a start and end index
+char* substring(char* original, int start, int end){
+	//allocate memory for answer
+	int ansLen = end - start + 1;
+	char* final = malloc(sizeof(char)*ansLen);
+	char* answer = final;
+	//get to starting point for the substring
+	int counter = 0;
+	while(counter < start){
+		original++;
+		counter++;
+	}
+	//go to end of substring while adding to the answer
+	counter = 0;
+	while(counter < ansLen - 1){
+		*final = *original;
+		final++;
+		original++;
+		counter++;
+	}
+	return answer;
+}
+
+// Q5 
+//Given a word, compute it's pig latin equivalent
+char* pigLatin(char* original){
+	//variables
+	char* answer;
+	int origLen = strLen(original);
+	int finalLen = origLen + 2;
+	char* final = malloc(sizeof(char)*finalLen);
+	answer = final;
+	//find first vowel
+	int vowel = firstVowel(original);
+
+	//put the letters up to the first vowel in own substring
+	char* toEnd = substring(original, 0, vowel);
+	//put letters remaining in original in own substring
+	char* remaining = substring(original, vowel, origLen);
+	//combine the remaining letters as part 1 to part 2(letters up till 1st vowel)
+	final = concat(remaining, toEnd);
+	//add 'ay' to the new string
+	answer = concat(final, "ay");
+
+	return answer;
+}
+
+//printArray
+void printArray(int array[], int size){
+	for(int i = 0; i < size; i++){
+		printf("%d\t", array[i]);
+	}
+}
+
+// Q6
+//Compute the most frequent digit in a string of digits
+int most(char* string){
+	//variables
+	int* array = (int*) malloc(sizeof(int)*10);
+	int* returnArray = array;
+	int numGreatest = 0;
+	int num = 0;
+	
+	//go through string
+	while(*string){
+		int digit = *string -'0';
+		//go to correct point in array
+		int counter = 0;
+		while(counter < digit){
+			array++;
+			counter++;
+		}
+		//add one to the spot in the array that you are at
+		(*array)++;
+		//save the digit if it is has been seen the most
+		if((*array) > numGreatest){
+			numGreatest = *array;
+			num = digit;
+		}
+		//return the pointer to the beginning
+		array = returnArray;
+		string++;
+	}
+	
+	return num;
+}
+
+int main(void) {
+	//printf("literally anything \n");
+	
+	//Question 1
+	char* forward = "abcdxyz";
+	char* backward = malloc(sizeof(char)*9);
+	reverse2(forward, backward);
+	printf(backward);
+	printf("\n");
+	
+	//Question 2
+	char* trial = "abced";
+	char* trial2 = "bdef";
+	char* trial3 = "lkjg";
+	printf("Test 1: %d\n",firstVowel(trial)); // 0
+	printf("Test 2: %d\n",firstVowel(trial2)); // 2
+	printf("Test 3: %d\n",firstVowel(trial3)); // -1
+	
+	//Question 3
+	char* first = "abc";
+	char* second = "defg";
+	printf(concat(first, second)); //"abcdefg"
+	printf("\n");
+	
+	//Question 4
+	trial = "abced";
+	printf(substring(trial,1,3)); //"bc"
+	printf("\n");
+	
+	//Question 5
+	printf(pigLatin("print")); //"intpray"
+	printf("\n");
+	printf(pigLatin("apple")); // "appleay"
+	printf("\n");
+	
+	
+	//Question 6
+	char nums[] = "132433423";
+	printf("%d \n",most(nums)); // 3
+	
+	return 0;
+}
